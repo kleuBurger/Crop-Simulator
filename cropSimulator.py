@@ -56,17 +56,85 @@ def auto_grow(crop, days):
         water = random.randint(1,10)
         crop.grow(light,water)
 
+def manual_grow(crop):
+    # Get the light and water values
+    valid = False
+    while not valid:
+        try:
+            light = int(input("Please enter a light value (1-10): "))
+            if 1 <= light <= 10:
+                valid = True
+            else:
+                print("Value entered not valid - please enter a value between 1 and 10")
+        except ValueError:
+                print("Value entered not calid - please enter a value between 1 and 10")
+    valid = False
+    while not valid:
+        try:
+            water = int(input("please enter a water value (1-10"))
+            if 1 <= water <= 10:
+                valid = True
+            else:
+                print("Value entered not valid - please enter a value between 1 and 10")
+        except ValueError:
+                print("Value entered not calid - please enter a value between 1 and 10")
+        # Grow the crop
+        crop.grow(light,water)
+
+def display_menue():
+    print("1. Grow Manually over 1 day")
+    print("2. Grow Automatically over 30 days")
+    print("3. Report Status")
+    print("0. Exit the program")
+    print()
+    print("Please select an option above")
+
+
+def menue_choice():
+
+    option_valid = False
+    while not option_valid:
+        try:
+            choice = int(input("option selected: "))
+            if 0 <= choice <= 4:
+                option_valid = True
+            else:
+                print("please enter a valid option")
+        except ValueError:
+            print("please enter a valid option")
+            return choice
+
+def manage_crop(crop):
+    print("This is the crop management program")
+    print()
+    noexit = True
+    while noexit:
+        display_menue()
+        option = menue_choice()
+        print()
+        if option == 1:
+            manual_grow(crop)
+        elif option == 2:
+            auto_grow(crop, 30)
+            print()
+        elif option == 3:
+            print(crop.report())
+            print()
+        elif option == 0:
+            noexit = False
+            print()
+            print("Thank you for using crop simulator")
+
+
+
+
 
 
 
 def main():
     # instaniate the class
     new_crop = Crop(1,4,3)
-    print(new_crop.needs())
-    print(new_crop.report())
-
-    auto_grow(new_crop,30)
-    print(new_crop.report())
+    manage_crop(new_crop)
 
 if __name__ == "__main__":
     main()
